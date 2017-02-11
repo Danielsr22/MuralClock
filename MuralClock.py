@@ -40,7 +40,7 @@ def main():
 	screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT), pygame.RESIZABLE)
 	pygame.display.set_caption("MuralClock")
 	fps = pygame.time.Clock()
-	fondo = pygame.image.load("fondoGris.jpg").convert()
+	fondo = pygame.image.load("wallpapers/fondoGris.jpg").convert()
 	fuenteReloj = pygame.font.Font("fonts/Roboto.ttf", 210)
 	fuenteFecha = pygame.font.Font("fonts/Roboto.ttf",45)
 	## Main loop
