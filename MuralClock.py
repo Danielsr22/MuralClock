@@ -17,8 +17,12 @@ blanco = (255, 255, 255)
 naranja = ()
 negro = (0, 0, 0)
 
+tipografia = "fonts/Roboto.ttf"
+color_icono = "blanco"
+
 ## Seteo para Fcio. Varela
 forecast_id = 466961
+
 
 class Clima():
 	textos = {"Breezy":"Viento Suave", "Scattered Showers":"Llovizna", "Showers":"Lluvia", "Scattered Thunderstorms":"Tormentas Dispersas","Sunny":"Soleado","Partly Cloudy":"Parcialmente Nublado", "Mostly Cloudy":"Mayormente Nublado", "Cloudy":"Nublado","Thunderstorms":"Tormentas"}
@@ -30,6 +34,9 @@ class Clima():
 	clima1 = climaExtendido[1]
 	clima2 = climaExtendido[2]
 	clima3 = climaExtendido[3]
+
+	def climasDisponibles(self):
+		return list(self.textos.values())
 
 	def traducirClima(self,texto):
 		traducido = self.textos[texto]
@@ -97,16 +104,32 @@ def main():
 	pygame.display.set_caption("MuralClock")
 	fps = pygame.time.Clock()
 	fondo = pygame.image.load("wallpapers/fondoGris.jpg").convert()
+
+	## Instancio el clima	
+	c = Clima()
+	iconos = c.climasDisponibles()
+	iconos = {iconos[0]:"viento", iconos[1]:"llovizna",iconos[2]:"lluvia",iconos[3]:"tormenta",iconos[4]:"soleado",iconos[5]:"parcialmente_nublado", iconos[6]:"nublado",iconos[7]:"nublado",iconos[8]:"tormenta"}
+
+	## Cargando icono temperaturas
 	iconTemp = pygame.image.load("icons/weather/temp-blanco.png").convert()
-	fuenteReloj = pygame.font.Font("fonts/Roboto.ttf", 220)
-	fuenteFecha = pygame.font.Font("fonts/Roboto.ttf",50)
-	fuenteClima = pygame.font.Font("fonts/Roboto.ttf",130)
-	fuenteMinMax = pygame.font.Font("fonts/Roboto.ttf",47)
+	transparente = iconTemp.get_at((0,0))
+	iconTemp.set_colorkey(transparente,RLEACCEL)
+
+
+	## Cargando icono clima actual
+	iconActual = pygame.image.load("icons/weather/"+iconos[c.climaActual()[-1]]+"-"+color_icono+".png").convert()
+	transparente = iconActual.get_at((0,0))
+	iconActual.set_colorkey(transparente,RLEACCEL)
+
+	## Cargando fuentes
+	fuenteReloj = pygame.font.Font(tipografia, 220)
+	fuenteFecha = pygame.font.Font(tipografia,50)
+	fuenteClima = pygame.font.Font(tipografia,130)
+	fuenteMinMax = pygame.font.Font(tipografia,47)
 	
 	date = getDate()
 	hoy = date
 
-	c = Clima()
 	print('Clima actual:')
 	print(c.climaActual())
 
@@ -143,8 +166,7 @@ def main():
 		reloj = fuenteReloj.render(getTime(), 1, blanco)
 		fecha = fuenteFecha.render(str(date) ,1, blanco)
 		tempActual = fuenteClima.render(c.climaActual()[0]+"°C",1,blanco)
-		tempMinMaxHoy = fuenteMinMax.render("Min: "+c.climaActual()[2]+"°C / Max: "+c.climaActual()[1]+"°C",1,blanco)
-		#tempMinHoy = fuenteClima.render("Min: "+c.climaActual()[2]+"°C",1,blanco)
+		tempMinMaxHoy = fuenteMinMax.render(c.climaActual()[2]+"°C / "+c.climaActual()[1]+"°C",1,blanco)
 		estadoHoy = fuenteMinMax.render(c.climaActual()[3],1,blanco)
 		
 		## Sector superior
@@ -153,10 +175,11 @@ def main():
 
 		## Clima de hoy
 		screen.blit(tempActual, (70,450))
-		screen.blit(tempMinMaxHoy, (70,600))
+		screen.blit(tempMinMaxHoy, (150,600))
 		screen.blit(estadoHoy, (340,500))
 
-		screen.blit(iconTemp,(70, 550))
+		screen.blit(iconTemp,(70, 600))
+		screen.blit(iconActual,(300,500))
 
 		## Pronostico extendido
 
