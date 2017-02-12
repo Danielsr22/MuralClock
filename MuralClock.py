@@ -5,8 +5,9 @@ import pygame
 from pygame.locals import *
 import sys
 import time
-#import pyowm
 from pyql.weather.forecast import Forecast
+import time
+import schedule
 
 	
 
@@ -25,7 +26,7 @@ forecast_id = 466961
 
 
 class Clima():
-	textos = {"Breezy":"Viento Suave", "Scattered Showers":"Llovizna", "Showers":"Lluvia", "Scattered Thunderstorms":"Tormentas Dispersas","Sunny":"Soleado","Partly Cloudy":"Parcialmente Nublado", "Mostly Cloudy":"Mayormente Nublado", "Cloudy":"Nublado","Thunderstorms":"Tormentas"}
+	textos = {"Breezy":"Hay vientito", "Scattered Showers":"Está lloviznando", "Showers":"Lluvia, torta frita!", "Scattered Thunderstorms":"Puede haber tormentas","Sunny":"Solcito afuera","Partly Cloudy":"Un poco nublado", "Mostly Cloudy":"Bastante nublado", "Cloudy":"Nublado","Thunderstorms":"Tormenta, no salgas"}
 	dia = {'Mon':'Lun','Tue':'Mar','Wed':'Mie','Thu':'Jue','Fri':'Vie','Sat':'Sab','Sun':'Dom'}
 	climaHoy = Forecast.get(woeid=forecast_id, u='c')
 	climaExtendido = climaHoy.item.forecast
@@ -34,6 +35,16 @@ class Clima():
 	clima1 = climaExtendido[1]
 	clima2 = climaExtendido[2]
 	clima3 = climaExtendido[3]
+
+#	def actualizarClima(self):
+#		self.climaHoy = Forecast.get(woeid=forecast_id, u='c')
+#		climaExtendido = climaHoy.item.forecast		
+
+	## Actualizar clima cada 30 min
+#	schedule.every(30).minutes.do(actualizarClima())
+#	while 1:
+#		schedule.run_pending()
+#		time.sleep(1)
 
 	def climasDisponibles(self):
 		return list(self.textos.values())
@@ -121,11 +132,25 @@ def main():
 	transparente = iconActual.get_at((0,0))
 	iconActual.set_colorkey(transparente,RLEACCEL)
 
+	## Cargando iconos predicciones
+	iconoPrediccion1 = pygame.image.load('icons/weather/'+iconos[c.climaManiana()[-2]]+'-'+color_icono+'.png').convert()
+	transparente = iconoPrediccion1.get_at((0,0))
+	iconoPrediccion1.set_colorkey(transparente,RLEACCEL)
+
+	iconoPrediccion2 = pygame.image.load('icons/weather/'+iconos[c.climaPasado()[-2]]+'-'+color_icono+'.png').convert()
+	transparente = iconoPrediccion2.get_at((0,0))
+	iconoPrediccion2.set_colorkey(transparente,RLEACCEL)
+
+	iconoPrediccion3 = pygame.image.load('icons/weather/'+iconos[c.climaPasadoPlus()[-2]]+'-'+color_icono+'.png').convert()
+	transparente = iconoPrediccion3.get_at((0,0))
+	iconoPrediccion3.set_colorkey(transparente,RLEACCEL)
+
 	## Cargando fuentes
 	fuenteReloj = pygame.font.Font(tipografia, 220)
 	fuenteFecha = pygame.font.Font(tipografia,50)
 	fuenteClima = pygame.font.Font(tipografia,130)
 	fuenteMinMax = pygame.font.Font(tipografia,47)
+	fuentePrediccion = pygame.font.Font(tipografia,37)
 	
 	date = getDate()
 	hoy = date
@@ -165,23 +190,35 @@ def main():
 		
 		reloj = fuenteReloj.render(getTime(), 1, blanco)
 		fecha = fuenteFecha.render(str(date) ,1, blanco)
-		tempActual = fuenteClima.render(c.climaActual()[0]+"°C",1,blanco)
+		tempActual = fuenteClima.render(c.climaActual()[0]+"°",1,blanco)
 		tempMinMaxHoy = fuenteMinMax.render(c.climaActual()[2]+"°C / "+c.climaActual()[1]+"°C",1,blanco)
 		estadoHoy = fuenteMinMax.render(c.climaActual()[3],1,blanco)
+		tempPrediccion1 = fuentePrediccion.render(c.climaManiana()[1]+"°C / "+c.climaManiana()[0]+"°C",1,blanco)
+		tempPrediccion2 = fuentePrediccion.render(c.climaPasado()[1]+"°C / "+c.climaPasado()[0]+"°C",1,blanco)
+		tempPrediccion3 = fuentePrediccion.render(c.climaPasadoPlus()[1]+"°C / "+c.climaPasadoPlus()[0]+"°C",1,blanco)
 		
 		## Sector superior
 		screen.blit(reloj, (320,110))
 		screen.blit(fecha, (420,15))
 
 		## Clima de hoy
-		screen.blit(tempActual, (70,450))
+		screen.blit(tempActual, (70,390))
 		screen.blit(tempMinMaxHoy, (150,600))
-		screen.blit(estadoHoy, (340,500))
+		screen.blit(estadoHoy, (70,530))
 
 		screen.blit(iconTemp,(70, 600))
-		screen.blit(iconActual,(300,500))
+		screen.blit(iconActual,(250,400))
 
 		## Pronostico extendido
+
+		screen.blit(tempPrediccion1,(550,605))
+		screen.blit(iconoPrediccion1,(575,465))
+
+		screen.blit(tempPrediccion2,(800,605))
+		screen.blit(iconoPrediccion2,(825,465))
+
+		screen.blit(tempPrediccion3,(1050,605))
+		screen.blit(iconoPrediccion3,(1075,465))
 
 
 
