@@ -7,15 +7,12 @@ import sys
 import time
 from pyql.weather.forecast import Forecast
 import time
-import schedule
 
-	
 
 SCREEN_WIDTH = 1024
 SCREEN_HEIGHT = 600
 
 blanco = (255, 255, 255)
-naranja = ()
 negro = (0, 0, 0)
 
 tipografia = "fonts/Roboto.ttf"
@@ -36,15 +33,6 @@ class Clima():
 	clima2 = climaExtendido[2]
 	clima3 = climaExtendido[3]
 
-#	def actualizarClima(self):
-#		self.climaHoy = Forecast.get(woeid=forecast_id, u='c')
-#		climaExtendido = climaHoy.item.forecast		
-
-	## Actualizar clima cada 30 min
-#	schedule.every(30).minutes.do(actualizarClima())
-#	while 1:
-#		schedule.run_pending()
-#		time.sleep(1)
 
 	def climasDisponibles(self):
 		return list(self.textos.values())
