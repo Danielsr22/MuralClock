@@ -116,56 +116,10 @@ def main():
 	fps = pygame.time.Clock()
 	fondo = pygame.image.load("wallpapers/fondoGris.jpg").convert()
 
-	## Instancio el clima	
-	c = Clima()
-	iconos = c.climasDisponibles()
-	iconos = {iconos[0]:"viento", iconos[1]:"chaparrones",iconos[2]:"llovizna",iconos[3]:"lluvia",iconos[4]:"tormenta",iconos[5]:"soleado", iconos[6]:"parcialmente_nublado",iconos[7]:"muy_nublado",iconos[8]:"nublado",iconos[9]:"tormenta_fuerte"}
-
-	## Cargando icono temperaturas
-	iconTemp = pygame.image.load("icons/weather/temp.png").convert()
-	transparente = iconTemp.get_at((0,0))
-	iconTemp.set_colorkey(transparente,RLEACCEL)
-
-
-	## Cargando icono clima actual
-	iconActual = pygame.image.load("icons/weather/"+iconos[c.climaActual()[-1]]+".png").convert()
-	transparente = iconActual.get_at((0,0))
-	iconActual.set_colorkey(transparente,RLEACCEL)
-
-	## Cargando iconos predicciones
-	iconoPrediccion1 = pygame.image.load('icons/weather/'+iconos[c.climaManiana()[-2]]+'.png').convert()
-	transparente = iconoPrediccion1.get_at((0,0))
-	iconoPrediccion1.set_colorkey(transparente,RLEACCEL)
-
-	iconoPrediccion2 = pygame.image.load('icons/weather/'+iconos[c.climaPasado()[-2]]+'.png').convert()
-	transparente = iconoPrediccion2.get_at((0,0))
-	iconoPrediccion2.set_colorkey(transparente,RLEACCEL)
-
-	iconoPrediccion3 = pygame.image.load('icons/weather/'+iconos[c.climaPasadoPlus()[-2]]+'.png').convert()
-	transparente = iconoPrediccion3.get_at((0,0))
-	iconoPrediccion3.set_colorkey(transparente,RLEACCEL)
-
-	## Cargando fuentes
-	fuenteReloj = pygame.font.Font(tipografia, 200)
-	fuenteFecha = pygame.font.Font(tipografia,40)
-	fuenteClima = pygame.font.Font(tipografia,110)
-	fuenteMinMax = pygame.font.Font(tipografia,37)
-	fuentePrediccion = pygame.font.Font(tipografia,27)
+	
 	
 	date = getDate()
 	hoy = date
-
-	print('Clima actual:')
-	print(c.climaActual())
-
-	print('\nClima Mañana:')
-	print(c.climaManiana())
-
-	print('\nClima Pasado:')
-	print(c.climaPasado())
-
-	print('\nClima pasado pasado:')
-	print(c.climaPasadoPlus())
 
 
 	## Main loop
@@ -175,11 +129,44 @@ def main():
 				sys.exit()
 		
 		fps.tick(10)
-		
-		date = getDate()
-		
-		#if (date != hoy):
-		#	print('Hoy NO es hoy')
+
+		## Instancio el clima	
+		c = Clima()
+		iconos = c.climasDisponibles()
+		iconos = {iconos[0]:"viento", iconos[1]:"chaparrones",iconos[2]:"llovizna",iconos[3]:"lluvia",iconos[4]:"tormenta",iconos[5]:"soleado", iconos[6]:"parcialmente_nublado",iconos[7]:"muy_nublado",iconos[8]:"nublado",iconos[9]:"tormenta_fuerte"}
+
+		## Cargando icono temperaturas
+		iconTemp = pygame.image.load("icons/weather/temp.png").convert()
+		transparente = iconTemp.get_at((0,0))
+		iconTemp.set_colorkey(transparente,RLEACCEL)
+
+
+		## Cargando icono clima actual
+		iconActual = pygame.image.load("icons/weather/"+iconos[c.climaActual()[-1]]+".png").convert()
+		transparente = iconActual.get_at((0,0))
+		iconActual.set_colorkey(transparente,RLEACCEL)
+
+		## Cargando iconos predicciones
+		iconoPrediccion1 = pygame.image.load('icons/weather/'+iconos[c.climaManiana()[-2]]+'.png').convert()
+		transparente = iconoPrediccion1.get_at((0,0))
+		iconoPrediccion1.set_colorkey(transparente,RLEACCEL)
+
+		iconoPrediccion2 = pygame.image.load('icons/weather/'+iconos[c.climaPasado()[-2]]+'.png').convert()
+		transparente = iconoPrediccion2.get_at((0,0))
+		iconoPrediccion2.set_colorkey(transparente,RLEACCEL)
+
+		iconoPrediccion3 = pygame.image.load('icons/weather/'+iconos[c.climaPasadoPlus()[-2]]+'.png').convert()
+		transparente = iconoPrediccion3.get_at((0,0))
+		iconoPrediccion3.set_colorkey(transparente,RLEACCEL)
+
+		## Cargando fuentes
+		fuenteReloj = pygame.font.Font(tipografia, 200)
+		fuenteFecha = pygame.font.Font(tipografia,40)
+		fuenteClima = pygame.font.Font(tipografia,110)
+		fuenteMinMax = pygame.font.Font(tipografia,37)
+		fuentePrediccion = pygame.font.Font(tipografia,27)
+			
+		date = getDate()		
 		
 		d = str(date[0])
 		num = str(date[1])
