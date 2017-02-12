@@ -99,7 +99,7 @@ def getDate():
 
 def main():
 	## Inicializo la ventana (dimensiones y titulo)
-	screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT), pygame.RESIZABLE)
+	screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT), pygame.RESIZABLE | pygame.FULLSCREEN)
 	pygame.display.set_caption("MuralClock")
 	fps = pygame.time.Clock()
 	fondo = pygame.image.load("wallpapers/fondoGris.jpg").convert()
@@ -116,8 +116,8 @@ def main():
 			if event.type == pygame.QUIT:
 				sys.exit()
 			if event.type == KEYDOWN:
-      			if event.key == K_q:
-         			exit()
+				if event.key == K_q:
+					exit()
 
 		
 		fps.tick(10)
