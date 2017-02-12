@@ -11,8 +11,8 @@ import schedule
 
 	
 
-SCREEN_WIDTH = 1366
-SCREEN_HEIGHT = 768
+SCREEN_WIDTH = 1024
+SCREEN_HEIGHT = 600
 
 blanco = (255, 255, 255)
 naranja = ()
@@ -26,7 +26,7 @@ forecast_id = 466961
 
 
 class Clima():
-	textos = {"Breezy":"Hay vientito", "Scattered Showers":"Está lloviznando", "Showers":"Lluvia, torta frita!", "Scattered Thunderstorms":"Puede haber tormentas","Sunny":"Solcito afuera","Partly Cloudy":"Un poco nublado", "Mostly Cloudy":"Bastante nublado", "Cloudy":"Nublado","Thunderstorms":"Tormenta, no salgas"}
+	textos = {"Breezy":"Hay vientito", "Scattered Showers":"Chaparrones", "Showers":"Llovizna, prepará mate!","Rain":"Lluvia, torta frita!", "Scattered Thunderstorms":"Puede haber tormentas","Sunny":"Solcito afuera","Partly Cloudy":"Un poco nublado", "Mostly Cloudy":"Bastante nublado", "Cloudy":"Nublado","Thunderstorms":"Tormenta, no salgas"}
 	dia = {'Mon':'Lunes','Tue':'Martes','Wed':'Miércoles','Thu':'Jueves','Fri':'Viernes','Sat':'Sábado','Sun':'Domingo'}
 	climaHoy = Forecast.get(woeid=forecast_id, u='c')
 	climaExtendido = climaHoy.item.forecast
@@ -119,38 +119,38 @@ def main():
 	## Instancio el clima	
 	c = Clima()
 	iconos = c.climasDisponibles()
-	iconos = {iconos[0]:"viento", iconos[1]:"llovizna",iconos[2]:"lluvia",iconos[3]:"tormenta",iconos[4]:"soleado",iconos[5]:"parcialmente_nublado", iconos[6]:"nublado",iconos[7]:"nublado",iconos[8]:"tormenta"}
+	iconos = {iconos[0]:"viento", iconos[1]:"chaparrones",iconos[2]:"llovizna",iconos[3]:"lluvia",iconos[4]:"tormenta",iconos[5]:"soleado", iconos[6]:"parcialmente_nublado",iconos[7]:"muy_nublado",iconos[8]:"nublado",iconos[9]:"tormenta_fuerte"}
 
 	## Cargando icono temperaturas
-	iconTemp = pygame.image.load("icons/weather/temp-blanco.png").convert()
+	iconTemp = pygame.image.load("icons/weather/temp.png").convert()
 	transparente = iconTemp.get_at((0,0))
 	iconTemp.set_colorkey(transparente,RLEACCEL)
 
 
 	## Cargando icono clima actual
-	iconActual = pygame.image.load("icons/weather/"+iconos[c.climaActual()[-1]]+"-"+color_icono+".png").convert()
+	iconActual = pygame.image.load("icons/weather/"+iconos[c.climaActual()[-1]]+".png").convert()
 	transparente = iconActual.get_at((0,0))
 	iconActual.set_colorkey(transparente,RLEACCEL)
 
 	## Cargando iconos predicciones
-	iconoPrediccion1 = pygame.image.load('icons/weather/'+iconos[c.climaManiana()[-2]]+'-'+color_icono+'.png').convert()
+	iconoPrediccion1 = pygame.image.load('icons/weather/'+iconos[c.climaManiana()[-2]]+'.png').convert()
 	transparente = iconoPrediccion1.get_at((0,0))
 	iconoPrediccion1.set_colorkey(transparente,RLEACCEL)
 
-	iconoPrediccion2 = pygame.image.load('icons/weather/'+iconos[c.climaPasado()[-2]]+'-'+color_icono+'.png').convert()
+	iconoPrediccion2 = pygame.image.load('icons/weather/'+iconos[c.climaPasado()[-2]]+'.png').convert()
 	transparente = iconoPrediccion2.get_at((0,0))
 	iconoPrediccion2.set_colorkey(transparente,RLEACCEL)
 
-	iconoPrediccion3 = pygame.image.load('icons/weather/'+iconos[c.climaPasadoPlus()[-2]]+'-'+color_icono+'.png').convert()
+	iconoPrediccion3 = pygame.image.load('icons/weather/'+iconos[c.climaPasadoPlus()[-2]]+'.png').convert()
 	transparente = iconoPrediccion3.get_at((0,0))
 	iconoPrediccion3.set_colorkey(transparente,RLEACCEL)
 
 	## Cargando fuentes
-	fuenteReloj = pygame.font.Font(tipografia, 220)
-	fuenteFecha = pygame.font.Font(tipografia,50)
-	fuenteClima = pygame.font.Font(tipografia,130)
-	fuenteMinMax = pygame.font.Font(tipografia,47)
-	fuentePrediccion = pygame.font.Font(tipografia,37)
+	fuenteReloj = pygame.font.Font(tipografia, 200)
+	fuenteFecha = pygame.font.Font(tipografia,40)
+	fuenteClima = pygame.font.Font(tipografia,110)
+	fuenteMinMax = pygame.font.Font(tipografia,37)
+	fuentePrediccion = pygame.font.Font(tipografia,27)
 	
 	date = getDate()
 	hoy = date
@@ -204,30 +204,30 @@ def main():
 		diaPrediccion3 = fuentePrediccion.render(c.climaPasadoPlus()[-1],1,blanco)
 		
 		## Sector superior
-		screen.blit(reloj, (320,110))
-		screen.blit(fecha, (420,15))
+		screen.blit(reloj, (180,80))
+		screen.blit(fecha, (280,10))
 
 		## Clima de hoy
-		screen.blit(tempActual, (70,390))
-		screen.blit(tempMinMaxHoy, (150,600))
-		screen.blit(estadoHoy, (70,530))
+		screen.blit(tempActual, (70,330))
+		screen.blit(tempMinMaxHoy, (130,510))
+		screen.blit(estadoHoy, (70,460))
 
-		screen.blit(iconTemp,(70, 600))
-		screen.blit(iconActual,(250,400))
+		screen.blit(iconTemp,(95, 515))
+		screen.blit(iconActual,(250,350))
 
 		## Pronostico extendido
 
-		screen.blit(diaPrediccion1,(590,410))
-		screen.blit(tempPrediccion1,(550,605))
-		screen.blit(iconoPrediccion1,(575,465))
+		screen.blit(diaPrediccion1,(490,370))
+		screen.blit(iconoPrediccion1,(475,415))
+		screen.blit(tempPrediccion1,(460,515))
 
-		screen.blit(diaPrediccion2,(835,410))
-		screen.blit(tempPrediccion2,(800,605))
-		screen.blit(iconoPrediccion2,(825,465))
+		screen.blit(diaPrediccion2,(675,370))
+		screen.blit(iconoPrediccion2,(665,415))
+		screen.blit(tempPrediccion2,(655,515))
 
-		screen.blit(diaPrediccion3,(1065,410))
-		screen.blit(tempPrediccion3,(1050,605))
-		screen.blit(iconoPrediccion3,(1075,465))
+		screen.blit(diaPrediccion3,(865,370))
+		screen.blit(iconoPrediccion3,(865,415))
+		screen.blit(tempPrediccion3,(855,515))
 
 
 
