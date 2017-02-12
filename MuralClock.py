@@ -27,7 +27,7 @@ forecast_id = 466961
 
 class Clima():
 	textos = {"Breezy":"Hay vientito", "Scattered Showers":"Está lloviznando", "Showers":"Lluvia, torta frita!", "Scattered Thunderstorms":"Puede haber tormentas","Sunny":"Solcito afuera","Partly Cloudy":"Un poco nublado", "Mostly Cloudy":"Bastante nublado", "Cloudy":"Nublado","Thunderstorms":"Tormenta, no salgas"}
-	dia = {'Mon':'Lun','Tue':'Mar','Wed':'Mie','Thu':'Jue','Fri':'Vie','Sat':'Sab','Sun':'Dom'}
+	dia = {'Mon':'Lunes','Tue':'Martes','Wed':'Miércoles','Thu':'Jueves','Fri':'Viernes','Sat':'Sábado','Sun':'Domingo'}
 	climaHoy = Forecast.get(woeid=forecast_id, u='c')
 	climaExtendido = climaHoy.item.forecast
 
@@ -193,9 +193,15 @@ def main():
 		tempActual = fuenteClima.render(c.climaActual()[0]+"°",1,blanco)
 		tempMinMaxHoy = fuenteMinMax.render(c.climaActual()[2]+"°C / "+c.climaActual()[1]+"°C",1,blanco)
 		estadoHoy = fuenteMinMax.render(c.climaActual()[3],1,blanco)
+
 		tempPrediccion1 = fuentePrediccion.render(c.climaManiana()[1]+"°C / "+c.climaManiana()[0]+"°C",1,blanco)
+		diaPrediccion1 = fuentePrediccion.render(c.climaManiana()[-1],1,blanco)
+
 		tempPrediccion2 = fuentePrediccion.render(c.climaPasado()[1]+"°C / "+c.climaPasado()[0]+"°C",1,blanco)
+		diaPrediccion2 = fuentePrediccion.render(c.climaPasado()[-1],1,blanco)
+
 		tempPrediccion3 = fuentePrediccion.render(c.climaPasadoPlus()[1]+"°C / "+c.climaPasadoPlus()[0]+"°C",1,blanco)
+		diaPrediccion3 = fuentePrediccion.render(c.climaPasadoPlus()[-1],1,blanco)
 		
 		## Sector superior
 		screen.blit(reloj, (320,110))
@@ -211,12 +217,15 @@ def main():
 
 		## Pronostico extendido
 
+		screen.blit(diaPrediccion1,(590,410))
 		screen.blit(tempPrediccion1,(550,605))
 		screen.blit(iconoPrediccion1,(575,465))
 
+		screen.blit(diaPrediccion2,(835,410))
 		screen.blit(tempPrediccion2,(800,605))
 		screen.blit(iconoPrediccion2,(825,465))
 
+		screen.blit(diaPrediccion3,(1065,410))
 		screen.blit(tempPrediccion3,(1050,605))
 		screen.blit(iconoPrediccion3,(1075,465))
 
