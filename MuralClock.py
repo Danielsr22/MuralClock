@@ -115,6 +115,10 @@ def main():
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				sys.exit()
+			if event.type == KEYDOWN:
+      			if event.key == K_q:
+         			exit()
+
 		
 		fps.tick(10)
 
