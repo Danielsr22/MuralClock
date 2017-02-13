@@ -124,8 +124,8 @@ def main():
 
 		## Instancio el clima	
 		c = Clima()
-		iconos = c.climasDisponibles()
-		#iconos = ("Hay vientito", "Chaparrones", "Llovizna, prepará mate!", "Lluvia, torta frita!", "Puede haber tormentas", "Solcito afuera","Un poco nublado","Bastante nublado","Nublado","Tormenta, no salgas", "Lluvia, torta frita!")
+		#iconos = c.climasDisponibles()
+		iconos = ("Hay vientito", "Chaparrones", "Llovizna, prepará mate!", "Lluvia, torta frita!", "Puede haber tormentas", "Solcito afuera","Un poco nublado","Bastante nublado","Nublado","Tormenta, no salgas", "Lluvia, torta frita!")
 		iconos = {iconos[0]:"viento", iconos[1]:"chaparrones",iconos[2]:"llovizna",iconos[3]:"lluvia",iconos[4]:"tormenta",iconos[5]:"soleado", iconos[6]:"parcialmente_nublado",iconos[7]:"muy_nublado",iconos[8]:"nublado",iconos[9]:"tormenta_fuerte", iconos[10]:"lluvia"}
 
 		## Cargando icono temperaturas
