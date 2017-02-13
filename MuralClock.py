@@ -25,13 +25,15 @@ forecast_id = 466961
 class Clima():
 	textos = {"Breezy":"Hay vientito", "Scattered Showers":"Chaparrones", "Showers":"Llovizna, prepará mate!","Rain":"Lluvia, torta frita!", "Scattered Thunderstorms":"Puede haber tormentas","Sunny":"Solcito afuera","Partly Cloudy":"Un poco nublado", "Mostly Cloudy":"Bastante nublado", "Cloudy":"Nublado","Thunderstorms":"Tormenta, no salgas", "Heavy Rain": "Lluvia, torta frita!"}
 	dia = {'Mon':'Lunes','Tue':'Martes','Wed':'Miércoles','Thu':'Jueves','Fri':'Viernes','Sat':'Sábado','Sun':'Domingo'}
-	climaHoy = Forecast.get(woeid=forecast_id, u='c')
-	climaExtendido = climaHoy.item.forecast
+	
+	def __init__(self):
+		self.climaHoy = Forecast.get(woeid=forecast_id, u='c')
+		self.climaExtendido = self.climaHoy.item.forecast
 
-	clima0 = climaExtendido[0]
-	clima1 = climaExtendido[1]
-	clima2 = climaExtendido[2]
-	clima3 = climaExtendido[3]
+		self.clima0 = self.climaExtendido[0]
+		self.clima1 = self.climaExtendido[1]
+		self.clima2 = self.climaExtendido[2]
+		self.clima3 = self.climaExtendido[3]
 
 
 	def climasDisponibles(self):
