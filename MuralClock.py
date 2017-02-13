@@ -120,7 +120,7 @@ def main():
 					exit()
 
 		
-		fps.tick(10)
+		fps.tick(2)
 
 		## Instancio el clima	
 		c = Clima()
