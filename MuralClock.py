@@ -25,7 +25,7 @@ forecast_id = 466961
 class Clima():
 	textos = {"Breezy":"Hay vientito", "Scattered Showers":"Chaparrones", "Showers":"Llovizna, prepará mate!","Rain":"Lluvia, torta frita!", "Scattered Thunderstorms":"Puede haber tormentas","Sunny":"Solcito afuera","Partly Cloudy":"Un poco nublado", "Mostly Cloudy":"Bastante nublado", "Cloudy":"Nublado","Thunderstorms":"Tormenta, no salgas", "Heavy Rain": "Lluvia, torta frita!"}
 	dia = {'Mon':'Lunes','Tue':'Martes','Wed':'Miércoles','Thu':'Jueves','Fri':'Viernes','Sat':'Sábado','Sun':'Domingo'}
-	
+
 	def __init__(self):
 		self.climaHoy = Forecast.get(woeid=forecast_id, u='c')
 		self.climaExtendido = self.climaHoy.item.forecast
@@ -35,6 +35,11 @@ class Clima():
 		self.clima2 = self.climaExtendido[2]
 		self.clima3 = self.climaExtendido[3]
 
+		## Registro ultima actualización
+		self.ultimaActualizacion = self.climaHoy.item.condition.date
+
+	def ultimaActualizacion(self):
+		return self.ultimaActualizacion
 
 	def climasDisponibles(self):
 		return tuple(self.textos.values())
@@ -126,6 +131,9 @@ def main():
 
 		## Instancio el clima	
 		c = Clima()
+
+		actualizacion = c.ultimaActualizacion
+
 		#iconos = c.climasDisponibles()
 		iconos = ("Hay vientito", "Chaparrones", "Llovizna, prepará mate!", "Lluvia, torta frita!", "Puede haber tormentas", "Solcito afuera","Un poco nublado","Bastante nublado","Nublado","Tormenta, no salgas", "Lluvia, torta frita!")
 		iconos = {iconos[0]:"viento", iconos[1]:"chaparrones",iconos[2]:"llovizna",iconos[3]:"lluvia",iconos[4]:"tormenta",iconos[5]:"soleado", iconos[6]:"parcialmente_nublado",iconos[7]:"muy_nublado",iconos[8]:"nublado",iconos[9]:"tormenta_fuerte", iconos[10]:"lluvia"}
@@ -160,6 +168,7 @@ def main():
 		fuenteClima = pygame.font.Font(tipografia,110)
 		fuenteMinMax = pygame.font.Font(tipografia,37)
 		fuentePrediccion = pygame.font.Font(tipografia,27)
+		fuenteActualizacion = pygame.font.Font(tipografia,8)
 			
 		date = getDate()		
 		
@@ -172,6 +181,7 @@ def main():
 		
 		reloj = fuenteReloj.render(getTime(), 1, blanco)
 		fecha = fuenteFecha.render(str(date) ,1, blanco)
+		update = fuenteActualizacion.render(actualizacion, 1, blanco)
 		tempActual = fuenteClima.render(c.climaActual()[0]+"°",1,blanco)
 		tempMinMaxHoy = fuenteMinMax.render(c.climaActual()[2]+"°C / "+c.climaActual()[1]+"°C",1,blanco)
 		estadoHoy = fuenteMinMax.render(c.climaActual()[3],1,blanco)
@@ -188,6 +198,7 @@ def main():
 		## Sector superior
 		screen.blit(reloj, (180,80))
 		screen.blit(fecha, (280,10))
+		screen.blit(update,(2,2))
 
 		## Clima de hoy
 		screen.blit(tempActual, (70,330))
