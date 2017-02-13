@@ -23,7 +23,7 @@ forecast_id = 466961
 
 
 class Clima():
-	textos = {"Breezy":"Hay vientito", "Scattered Showers":"Chaparrones", "Showers":"Llovizna, prepará mate!","Rain":"Lluvia, torta frita!", "Scattered Thunderstorms":"Puede haber tormentas","Sunny":"Solcito afuera","Partly Cloudy":"Un poco nublado", "Mostly Cloudy":"Bastante nublado", "Cloudy":"Nublado","Thunderstorms":"Tormenta, no salgas"}
+	textos = {"Breezy":"Hay vientito", "Scattered Showers":"Chaparrones", "Showers":"Llovizna, prepará mate!","Rain":"Lluvia, torta frita!", "Scattered Thunderstorms":"Puede haber tormentas","Sunny":"Solcito afuera","Partly Cloudy":"Un poco nublado", "Mostly Cloudy":"Bastante nublado", "Cloudy":"Nublado","Thunderstorms":"Tormenta, no salgas", "Heavy Rain": "Lluvia, torta frita!"}
 	dia = {'Mon':'Lunes','Tue':'Martes','Wed':'Miércoles','Thu':'Jueves','Fri':'Viernes','Sat':'Sábado','Sun':'Domingo'}
 	climaHoy = Forecast.get(woeid=forecast_id, u='c')
 	climaExtendido = climaHoy.item.forecast
@@ -35,7 +35,7 @@ class Clima():
 
 
 	def climasDisponibles(self):
-		return list(self.textos.values())
+		return tuple(self.textos.values())
 
 	def traducirClima(self,texto):
 		traducido = self.textos[texto]
@@ -125,7 +125,8 @@ def main():
 		## Instancio el clima	
 		c = Clima()
 		iconos = c.climasDisponibles()
-		iconos = {iconos[0]:"viento", iconos[1]:"chaparrones",iconos[2]:"llovizna",iconos[3]:"lluvia",iconos[4]:"tormenta",iconos[5]:"soleado", iconos[6]:"parcialmente_nublado",iconos[7]:"muy_nublado",iconos[8]:"nublado",iconos[9]:"tormenta_fuerte"}
+		#iconos = ("Hay vientito", "Chaparrones", "Llovizna, prepará mate!", "Lluvia, torta frita!", "Puede haber tormentas", "Solcito afuera","Un poco nublado","Bastante nublado","Nublado","Tormenta, no salgas", "Lluvia, torta frita!")
+		iconos = {iconos[0]:"viento", iconos[1]:"chaparrones",iconos[2]:"llovizna",iconos[3]:"lluvia",iconos[4]:"tormenta",iconos[5]:"soleado", iconos[6]:"parcialmente_nublado",iconos[7]:"muy_nublado",iconos[8]:"nublado",iconos[9]:"tormenta_fuerte", iconos[10]:"lluvia"}
 
 		## Cargando icono temperaturas
 		iconTemp = pygame.image.load("icons/weather/temp.png").convert()
